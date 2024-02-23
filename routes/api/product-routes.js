@@ -8,7 +8,7 @@ router.get('/', async (req, res) => {
   // find all products
   // be sure to include its associated Category and Tag data
   try {
-    const productData = await Product.findAll({ include: [Category, { through: ProductTag, model: Tag }] });
+    const productData = await Product.findAll({ include:[Category, { through: ProductTag, model: Tag }]});
     res.status(200).json(productData);
   } catch (err) {
     res.status(500).json(err);
@@ -16,20 +16,21 @@ router.get('/', async (req, res) => {
 });
 
 // get one product
-router.get('/:id', (req, res) => {
+router.get('/:id', async(req, res) => {
   // find a single product by its `id`
   // be sure to include its associated Category and Tag data
   try {
-    const productData = await Product.findAll({ 
+    const productData = await Product.findAll({
       where: {
         id: req.params.id
       },
-      include: [Category, { through: ProductTag, model: Tag }] });
+      include: [Category, { through: ProductTag, model: Tag }]
+    });
     res.status(200).json(productData);
   } catch (err) {
     res.status(500).json(err);
   };
-}
+})
 
 // create new product
 router.post('/', (req, res) => {
